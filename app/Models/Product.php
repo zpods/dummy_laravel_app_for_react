@@ -2,9 +2,13 @@
 
 namespace App\Models;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Image;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Product extends Model
 {
@@ -12,13 +16,22 @@ class Product extends Model
 
 
     /**
-     * return images belonging to particular product
-     * @return Collection of Image
+     * get images belonging to particular product
+     * @return HasMany
      */
-    public function images(){
+    public function images(): HasMany
+    {
         return $this->hasMany(Image::class);
     }
 
+    /**
+     * get users belongs to product
+     * @return BelongsToMany
+     */
+    public function users(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, "users_products", "products_id", "users_id");
+    }
 }
 
 
