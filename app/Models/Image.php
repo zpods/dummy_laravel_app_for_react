@@ -15,7 +15,7 @@ class Image extends Model
      * get products  images
      * @return BelongsTo
      */
-    public function images(): BelongsTo
+    public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
     }
