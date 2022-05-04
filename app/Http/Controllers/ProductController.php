@@ -14,7 +14,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::with(['images'])->get()->take(6);
+        $products = Product::with(['images'])->get();
         return response()->json($products);
     }
 
@@ -23,14 +23,22 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function searchProducts($name)
+    public function searchProduct($searchedData)
     {
-        $result = Product::where('name', '=', $name)->with('images')->get();
-        if($result){
-            return response()->json($result, 200);
+        if(is_numeric($searchedData)){
+            $result = Product::where('id', '=', $searchedData)->with('images')->get();
+            if($result){
+                return response()->json($result, 200);
+            }else{
+                return response()->json('Products not found', 404);
+            }
         }else{
-            return response()->json('Products not found', 404);
+            $result = Product::where('name', '=', $searchedData)->with('images')->get();
+            if($result){
+                return response()->json($result, 200);
+            }else{
+                return response()->json('Products not found', 404);
+            }
         }
-
     }
 }

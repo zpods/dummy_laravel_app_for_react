@@ -18,7 +18,7 @@ class ProductFactory extends Factory
     public function definition()
     {
 
-        $name        =  $this->faker->word();
+        $name        =  $this->faker->unique()->word();
         $slug        =  strtolower($name);
         $description =  $this->faker->text(240);
         $price       =  $this->faker->numberBetween(199, 29999);
