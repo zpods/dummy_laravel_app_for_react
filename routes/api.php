@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,8 +19,8 @@ use App\Http\Controllers\UserController;
 */
 
 /** 
-*public routes
-*/
+ *public routes
+ */
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
@@ -33,6 +34,9 @@ Route::get('/products/{name}', [ProductController::class, 'searchProduct']);
  * route demands to be logged 
  */
 
-Route::group(['middleware' => ['auth:sanctum']], function(){
+Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [AuthController::class, 'logoutUser']);
+    Route::get('/cart', [CartController::class, 'sendUserCart']);
+    Route::delete('/cart/remove', [CartController::class, 'removeAllProductsFromCart']);
+    Route::post('/cart', [CartController::class, 'storeUserCart']);
 });
