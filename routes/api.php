@@ -31,7 +31,7 @@ Route::get('/products', [ProductController::class, 'index']);
 Route::get('/products/{name}', [ProductController::class, 'searchProduct']);
 
 /**
- * route demands to be logged 
+ * route demands user to be logged 
  */
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
