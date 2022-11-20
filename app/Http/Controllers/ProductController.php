@@ -2,28 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Product;
+use Illuminate\Http\JsonResponse;
 
 class ProductController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display list of products together with images belonging to it.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function index() : JsonResponse
     {
         $products = Product::with(['images'])->get();
-        return response()->json($products);
+        return response()->json($products, 200);
     }
 
     /**
-     * Display searched products.
+     * Display searched products with details (images, description, number products in stock etc).
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function searchProduct($searchedData)
+    public function searchProduct($searchedData) : JsonResponse
     {
         if(is_numeric($searchedData)){
             $result = Product::where('id', '=', $searchedData)->with('images')->get();

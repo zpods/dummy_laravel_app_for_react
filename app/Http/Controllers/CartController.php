@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\User;
-use stdClass;
+use Illuminate\Http\JsonResponse;
+
 
 class CartController extends Controller
 {
@@ -25,9 +25,9 @@ class CartController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function storeUserCart(Request $request)
+    public function storeUserCart(Request $request) : JsonResponse
     {
         $data = $request->post();
         $products = json_decode($data["data"]);
@@ -42,15 +42,13 @@ class CartController extends Controller
         }
         return response()->json(['cart_stored' => $products], 204);
     }
-
-    /*/
         
     /**
      * send user cart to frontend 
      *
-     * @return ResponseFactory
+     *  @return JsonResponse
      */
-    public function sendUserCart()
+    public function sendUserCart() : JsonResponse
     {
         $response = [];
         $user_id = Auth::user()->id;
@@ -67,12 +65,15 @@ class CartController extends Controller
         }
     }
 
-    /*remove all products from cart*/
-    public function removeAllProductsFromCart()
+    /** 
+    * remove all products from cart
+    * @return JsonResponse
+    */
+    public function removeAllProductsFromCart() : JsonResponse
     {
         $user = Auth::user();
         $user_id = $user;
         DB::table('product_user')->whereIn('user_id', $user_id)->delete();
-        return response()->json(['cart_products_of_user_removed' => $user_id]);
+        return response()->json(['cart_products_of_user_removed' => $user_id], 200);
     }
 }
