@@ -19,7 +19,7 @@ class ImageFactory extends Factory
         $url = '/public/images/'.'1.jpg';
         $alt =  $this->faker->word();
         $description = $this->faker->text(120);
-        $random_int = $this->faker->numberBetween(1, 100);
+        $random_int = $this->faker->numberBetween(1, 125);
 
         return [
             'url'         => $url,

@@ -18,15 +18,8 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         User::factory(10)->create();
-        Product::factory(100)->create();
+        Product::factory(125)->create();
         Image::factory(600)->create();
-
-        $users = User::all();
-
-        Product::all()->each(function($product) use ($users){
-            $product->users()->attach(
-                $users->random(rand(0,3))->pluck('id')->toArray()
-            );
-        });
+       
     }
 }

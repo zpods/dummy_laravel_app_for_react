@@ -17,6 +17,7 @@ class ProductFactory extends Factory
      */
     public function definition()
     {
+        $faker = \Faker\Factory::create('en_US');
 
         $name        =  $this->faker->unique()->word();
         $slug        =  strtolower($name);
